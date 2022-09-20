@@ -29,6 +29,10 @@ Suba tudo em um repositório e faça a entrega.
 * A linguagem de programação para este desafio é Node.
 
 
+## Call flow and ports
+web (8080) -> nginx -> (80) -> app(3000) -> dtabase(3306).
+
+
 # Run
 
 ## Docker-compose
@@ -46,7 +50,7 @@ curl -X POST http://localhost:8080/insert -H "Content-Type: application/json" -d
 
 ## List all
 ```bash
-curl -X GET http://localhost:80/list 
+curl -X GET http://localhost:8080/list 
 ```
 
 ## Delete all
