@@ -35,3 +35,21 @@ Suba tudo em um repositório e faça a entrega.
 ```bash
 docker-compose up -d
 ```
+
+
+# Requests
+
+## Insert
+```bash
+curl -X POST http://localhost:8080/insert -H "Content-Type: application/json" -d '{"name": "Name01"}' 
+```
+
+## List all
+```bash
+curl -X GET http://localhost:80/list 
+```
+
+## Delete all
+```bash
+curl -X "DELETE" http://localhost:8080/delete
+```

@@ -45,9 +45,23 @@ async function list() {
     return rows
 }
 
+async function deleteAll() {
+    const connection = await connectDb()
+    // query database
+    const [rows, fields] = await connection.execute('delete from people')
+    console.table(rows)
+    return rows
+}
+
 app.post('/insert', async function (req, res) {
     var name = req.body.name
     var result = await insert(name)
+    res.send(result)
+});
+
+
+app.delete('/delete', async function (req, res) {
+    var result = await deleteAll()
     res.send(result)
 });
 
@@ -58,6 +72,11 @@ app.get('/list', async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
+   
+    // first insert
+    await insert('user' + Date.now())
+
+
     var people = await list()
     const title = '<h1>Full Cycle Rocks!</h1>'
     const listStart = '<p>Lista de nomes cadastrada no banco de dados</p>'
