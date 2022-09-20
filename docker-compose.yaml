@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  db:
+    build:
+      context: database
+    container_name: db
+    hostname: db
+    restart: always
+    tty: true
+    command: --init-file /docker-entrypoint-initdb.d/CreateDatabase.sql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - node-network
+
+  app:
+    build:
+      context: node
+    container_name: app
+    hostname: app
+    tty: true
+    volumes:
+      - ./node:/usr/src/app
+    ports:
+      - 3000:3000
+    networks:
+      - node-network
+    depends_on:
+      - db
+  
+  reverseproxy:
+    build: 
+      context: nginx
+    container_name: reverseproxy
+    tty: true
+    ports:
+      - 8080:8080
+    networks:
+      - node-network
+    depends_on:
+      - app
+ 
+ 
+networks:
+  node-network:
